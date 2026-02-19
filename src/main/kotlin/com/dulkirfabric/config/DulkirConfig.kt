@@ -250,44 +250,45 @@ class DulkirConfig {
         val animations = builder.getOrCreateCategory(Component.literal("Animations"))
 
         //TODO: Come up with some custome float slider instead of int slider jank
+
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("posX"), configOptions.animationPreset.posX, -150, 150)
+            entryBuilder.startIntSlider(Component.literal("Held item offset X"), configOptions.animationPreset.posX, -150, 150)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.posX = newValue }
                 .setDefaultValue(0)
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("posY"), configOptions.animationPreset.posY, -150, 150)
+            entryBuilder.startIntSlider(Component.literal("Held item offset Y"), configOptions.animationPreset.posY, -150, 150)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.posY = newValue }
                 .setDefaultValue(0)
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("posZ"), configOptions.animationPreset.posZ, -150, 50)
+            entryBuilder.startIntSlider(Component.literal("Held item offset Z"), configOptions.animationPreset.posZ, -150, 50)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.posZ = newValue }
                 .setDefaultValue(0)
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("rotationX"), configOptions.animationPreset.rotX, -180, 180)
+            entryBuilder.startIntSlider(Component.literal("Held item rotation X"), configOptions.animationPreset.rotX, -180, 180)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.rotX = newValue }
                 .setDefaultValue(0)
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("rotationY"), configOptions.animationPreset.rotY, -180, 180)
+            entryBuilder.startIntSlider(Component.literal("Held item rotation Y"), configOptions.animationPreset.rotY, -180, 180)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.rotY = newValue }
                 .setDefaultValue(0)
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("rotationZ"), configOptions.animationPreset.rotZ, -180, 180)
+            entryBuilder.startIntSlider(Component.literal("Held item rotation Z"), configOptions.animationPreset.rotZ, -180, 180)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.rotZ = newValue }
                 .setDefaultValue(0)
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startFloatField(Component.literal("Held Item Scale"), configOptions.animationPreset.scale)
+            entryBuilder.startFloatField(Component.literal("Held item scale"), configOptions.animationPreset.scale)
                 .setTooltip(Component.literal("Recommended range of .1 - 2"))
                 .setSaveConsumer { newValue ->
                     configOptions.animationPreset.scale = newValue
@@ -296,14 +297,14 @@ class DulkirConfig {
                 .build()
         )
         animations.addEntry(
-            entryBuilder.startIntSlider(Component.literal("Swing Duration"), configOptions.animationPreset.swingDuration, 2, 20)
+            entryBuilder.startIntSlider(Component.literal("Held item swing duration"), configOptions.animationPreset.swingDuration, 2, 20)
                 .setSaveConsumer { newValue -> configOptions.animationPreset.swingDuration = newValue }
                 .setDefaultValue(6)
                 .build()
         )
         animations.addEntry(
             entryBuilder.startBooleanToggle(
-                Component.literal("Cancel Re-Equip Animation"),
+                Component.literal("Cancel re-equip Animation"),
                 configOptions.animationPreset.cancelReEquip
             )
                 .setSaveConsumer { newValue -> configOptions.animationPreset.cancelReEquip = newValue }
@@ -312,10 +313,10 @@ class DulkirConfig {
         )
         animations.addEntry(
             entryBuilder.startBooleanToggle(
-                Component.literal("Scale Swing Animation"),
+                Component.literal("Scale swing animation"),
                 configOptions.animationPreset.scaleSwingAnimation
             )
-                .setTooltip(Component.literal("Scales swing animation based on current item scale"))
+                .setTooltip(Component.literal("Scales swing animation speed based on current item scale"))
                 .setSaveConsumer { newValue -> configOptions.animationPreset.scaleSwingAnimation = newValue }
                 .setDefaultValue(false)
                 .build()
