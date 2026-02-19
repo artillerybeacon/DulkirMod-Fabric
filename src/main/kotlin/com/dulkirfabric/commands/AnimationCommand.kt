@@ -62,6 +62,7 @@ object AnimationCommand {
             DulkirConfig.configOptions.animationPreset.swingDuration = import.swingDuration
             DulkirConfig.configOptions.animationPreset.cancelReEquip = import.cancelReEquip
             DulkirConfig.configOptions.animationPreset.rotationlessDrink = import.rotationlessDrink
+            DulkirConfig.configOptions.animationPreset.scaleSwingAnimation = import.scaleSwingAnimation
         } catch (e: Exception) {
             TextUtils.info("§6Something went wrong when trying to import settings. Make sure you have a valid string copied to your clipboard!")
             return

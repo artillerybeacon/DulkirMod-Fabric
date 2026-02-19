@@ -7,6 +7,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +34,7 @@ public abstract class ItemInHandRendererMixin {
                             "Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V"
             )
     )
+
     public void onRenderHeldItem(AbstractClientPlayer abstractClientPlayer, float f, float g,
                                  InteractionHand interactionHand, float h, ItemStack itemStack, float i,
                                  PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, CallbackInfo ci) {
@@ -80,6 +82,51 @@ public abstract class ItemInHandRendererMixin {
             int i = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
             poseStack.translate((float)i * 0.56f, -0.52f, -0.72f);
             ci.cancel();
+        }
+    }
+
+    @Inject(
+        method = "swingArm",
+        at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(FFF)V",
+            shift = At.Shift.BEFORE
+        ),
+        cancellable = true
+    )
+    public void dulkir$onApplySwingOffset(float f, float g, PoseStack poseStack, int i, HumanoidArm humanoidArm, CallbackInfo ci) {
+        if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getScaleSwingAnimation()) {
+
+            float scale = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getScale();
+
+            /*
+            float h = -0.4F * Mth.sin(Mth.sqrt(f) * (float) Math.PI);
+		    float j = 0.2F * Mth.sin(Mth.sqrt(f) * (float) (Math.PI * 2));
+		    float k = -0.2F * Mth.sin(f * (float) Math.PI);
+             */
+            float pi = (float)Math.PI;
+
+            float ITEM_SWING_X_POS_SCALE = -0.4F * Mth.sin(Mth.sqrt(f) * pi);
+            float ITEM_SWING_Y_POS_SCALE = 0.2F * Mth.sin(Mth.sqrt(f) * pi * 2);
+            float ITEM_SWING_Z_POS_SCALE = -0.2F * Mth.sin(f * pi);
+
+            float ITEM_SWING_X_POS_SCALE_T = ITEM_SWING_X_POS_SCALE * scale;
+            float ITEM_SWING_Y_POS_SCALE_T = ITEM_SWING_Y_POS_SCALE * scale;
+            float ITEM_SWING_Z_POS_SCALE_T = ITEM_SWING_Z_POS_SCALE * scale;
+
+            // revert what the pose stack will be translated to
+            poseStack.translate(
+                i * -ITEM_SWING_X_POS_SCALE,
+                -ITEM_SWING_Y_POS_SCALE,
+                -ITEM_SWING_Z_POS_SCALE
+            );
+
+            // add our swing scale
+            poseStack.translate(i * ITEM_SWING_X_POS_SCALE_T,
+                                ITEM_SWING_Y_POS_SCALE_T,
+                                ITEM_SWING_Z_POS_SCALE_T);
+
+
         }
     }
 

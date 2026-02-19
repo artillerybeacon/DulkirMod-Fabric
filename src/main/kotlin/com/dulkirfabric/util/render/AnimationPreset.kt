@@ -14,4 +14,5 @@ data class AnimationPreset(
     var swingDuration: Int = 6,
     var cancelReEquip: Boolean = false,
     var rotationlessDrink: Boolean = true,
+    var scaleSwingAnimation: Boolean = false,
 )

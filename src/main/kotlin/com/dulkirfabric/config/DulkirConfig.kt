@@ -310,6 +310,15 @@ class DulkirConfig {
                 .setDefaultValue(false)
                 .build()
         )
+        animations.addEntry(
+            entryBuilder.startBooleanToggle(
+                Component.literal("Scale Swing Animation"),
+                configOptions.animationPreset.scaleSwingAnimation
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.scaleSwingAnimation = newValue }
+                .setDefaultValue(false)
+                .build()
+        )
 
         val bridge = builder.getOrCreateCategory(Component.literal("Bridge Features"))
 
@@ -450,7 +459,8 @@ class DulkirConfig {
         var speedBpsHud: Boolean = false,
         var pitchYawDisplay: Boolean = false,
         var hideScoreboardNumbers: Boolean = false,
-        var showPauseMenuButton: Boolean = false
+        var showPauseMenuButton: Boolean = false,
+        var scaleSwingAnimation: Boolean = false
     )
 
     @Serializable
