@@ -333,7 +333,7 @@ class DulkirConfig {
             FloatSliderBuilder(
                 Component.translatable("text.cloth-config.reset_value"),
                 Component.literal("Swing animation X offset scale"),
-                0.0f,
+                configOptions.animationPreset.swingScaleX,
                 -2.0f,
                 2.0f
             )
@@ -345,7 +345,7 @@ class DulkirConfig {
             FloatSliderBuilder(
                 Component.translatable("text.cloth-config.reset_value"),
                 Component.literal("Swing animation Y offset scale"),
-                0.0f,
+                configOptions.animationPreset.swingScaleY,
                 -2.0f,
                 2.0f
             )
@@ -357,7 +357,7 @@ class DulkirConfig {
             FloatSliderBuilder(
                 Component.translatable("text.cloth-config.reset_value"),
                 Component.literal("Swing animation Z offset scale"),
-                0.0f,
+                configOptions.animationPreset.swingScaleZ,
                 -2.0f,
                 2.0f
             )

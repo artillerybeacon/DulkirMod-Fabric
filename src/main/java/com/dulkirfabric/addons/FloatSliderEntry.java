@@ -69,8 +69,12 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double)this.value.get() - (double)minimum) / (double)Math.abs(maximum - minimum));
         this.resetButton = Button.builder(resetButtonKey, (widget) -> this.setValue(defaultValue.get())).bounds(0, 0, Minecraft.getInstance().font.width(resetButtonKey) + 6, 20).build();
-        this.sliderWidget.setMessage((Component)this.textGetter.apply(this.value.get()));
-        this.widgets = Lists.newArrayList(new AbstractWidget[]{this.sliderWidget, this.resetButton});
+        this.sliderWidget.setMessage((Component) this.textGetter.apply(this.value.get()));
+        this.widgets = Lists.newArrayList(
+            new AbstractWidget[] {
+                this.sliderWidget,
+                this.resetButton
+            });
     }
 
     public Function<Float, Component> getTextGetter() {
@@ -79,7 +83,7 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
 
     public FloatSliderEntry setTextGetter(Function<Float, Component> textGetter) {
         this.textGetter = textGetter;
-        this.sliderWidget.setMessage((Component)textGetter.apply(this.value.get()));
+        this.sliderWidget.setMessage((Component) textGetter.apply(this.value.get()));
         return this;
     }
 

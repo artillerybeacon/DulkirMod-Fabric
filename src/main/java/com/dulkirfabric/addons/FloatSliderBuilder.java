@@ -45,19 +45,19 @@ public class FloatSliderBuilder extends AbstractSliderFieldBuilder<Float, FloatS
     }
 
     public FloatSliderBuilder setTooltipSupplier(Function<Float, Optional<Component[]>> tooltipSupplier) {
-        return (FloatSliderBuilder)super.setTooltipSupplier(tooltipSupplier);
+        return (FloatSliderBuilder) super.setTooltipSupplier(tooltipSupplier);
     }
 
     public FloatSliderBuilder setTooltipSupplier(Supplier<Optional<Component[]>> tooltipSupplier) {
-        return (FloatSliderBuilder)super.setTooltipSupplier(tooltipSupplier);
+        return (FloatSliderBuilder) super.setTooltipSupplier(tooltipSupplier);
     }
 
     public FloatSliderBuilder setTooltip(Optional<Component[]> tooltip) {
-        return (FloatSliderBuilder)super.setTooltip(tooltip);
+        return (FloatSliderBuilder) super.setTooltip(tooltip);
     }
 
     public FloatSliderBuilder setTooltip(Component... tooltip) {
-        return (FloatSliderBuilder)super.setTooltip(tooltip);
+        return (FloatSliderBuilder) super.setTooltip(tooltip);
     }
 
     public FloatSliderBuilder setMax(float max) {
@@ -89,6 +89,6 @@ public class FloatSliderBuilder extends AbstractSliderFieldBuilder<Float, FloatS
             entry.setErrorSupplier(() -> this.errorSupplier.apply(entry.getValue()));
         }
 
-        return (FloatSliderEntry)this.finishBuilding(entry);
+        return (FloatSliderEntry) this.finishBuilding(entry);
     }
 }
