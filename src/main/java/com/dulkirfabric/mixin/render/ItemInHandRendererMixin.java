@@ -111,9 +111,9 @@ public abstract class ItemInHandRendererMixin {
                 swingScaleZ = scale;
             }
 
-            if (swingScaleX == 0f) swingScaleX = 1;
-            if (swingScaleY == 0f) swingScaleY = 1;
-            if (swingScaleZ == 0f) swingScaleZ = 1;
+            // if (swingScaleX == 0f) swingScaleX = 1;
+            // if (swingScaleY == 0f) swingScaleY = 1;
+            // if (swingScaleZ == 0f) swingScaleZ = 1;
 
             /*
             float h = -0.4F * Mth.sin(Mth.sqrt(f) * (float) Math.PI);
