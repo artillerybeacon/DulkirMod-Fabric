@@ -14,5 +14,10 @@ data class AnimationPreset(
     var swingDuration: Int = 6,
     var cancelReEquip: Boolean = false,
     var rotationlessDrink: Boolean = true,
+
+    var swingAnimationType: Int = 0,
+    var swingScaleX: Float = 0f,
+    var swingScaleY: Float = 0f,
+    var swingScaleZ: Float = 0f,
     var scaleSwingAnimation: Boolean = false,
 )

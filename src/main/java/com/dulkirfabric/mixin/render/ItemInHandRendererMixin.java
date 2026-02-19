@@ -95,9 +95,25 @@ public abstract class ItemInHandRendererMixin {
         cancellable = true
     )
     public void dulkir$onApplySwingOffset(float f, float g, PoseStack poseStack, int i, HumanoidArm humanoidArm, CallbackInfo ci) {
-        if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getScaleSwingAnimation()) {
+
+
+        if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingAnimationType() == 1) {
 
             float scale = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getScale();
+
+            float swingScaleX = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingScaleX();
+            float swingScaleY = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingScaleY();
+            float swingScaleZ = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingScaleZ();
+
+            if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getScaleSwingAnimation()) {
+                swingScaleX = scale;
+                swingScaleY = scale;
+                swingScaleZ = scale;
+            }
+
+            if (swingScaleX == 0f) swingScaleX = 1;
+            if (swingScaleY == 0f) swingScaleY = 1;
+            if (swingScaleZ == 0f) swingScaleZ = 1;
 
             /*
             float h = -0.4F * Mth.sin(Mth.sqrt(f) * (float) Math.PI);
@@ -110,9 +126,9 @@ public abstract class ItemInHandRendererMixin {
             float ITEM_SWING_Y_POS_SCALE = 0.2F * Mth.sin(Mth.sqrt(f) * pi * 2);
             float ITEM_SWING_Z_POS_SCALE = -0.2F * Mth.sin(f * pi);
 
-            float ITEM_SWING_X_POS_SCALE_T = ITEM_SWING_X_POS_SCALE * scale;
-            float ITEM_SWING_Y_POS_SCALE_T = ITEM_SWING_Y_POS_SCALE * scale;
-            float ITEM_SWING_Z_POS_SCALE_T = ITEM_SWING_Z_POS_SCALE * scale;
+            float ITEM_SWING_X_POS_SCALE_T = ITEM_SWING_X_POS_SCALE * swingScaleX;
+            float ITEM_SWING_Y_POS_SCALE_T = ITEM_SWING_Y_POS_SCALE * swingScaleY;
+            float ITEM_SWING_Z_POS_SCALE_T = ITEM_SWING_Z_POS_SCALE * swingScaleZ;
 
             // revert what the pose stack will be translated to
             poseStack.translate(

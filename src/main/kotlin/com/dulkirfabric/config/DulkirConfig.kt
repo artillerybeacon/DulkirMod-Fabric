@@ -26,6 +26,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.json.Json
 import me.shedaniel.clothconfig2.api.ConfigBuilder
+import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder
 import net.minecraft.ChatFormatting
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
@@ -250,19 +251,7 @@ class DulkirConfig {
         )
         val animations = builder.getOrCreateCategory(Component.literal("Animations"))
 
-        //TODO: Come up with some custome float slider instead of int slider jank
-
-        animations.addEntry(
-            FloatSliderBuilder(
-                Component.translatable("text.cloth-config.reset_value"),
-                Component.literal("Test Float field"),
-                0.0f,
-                -1.0f,
-                1.0f
-                )
-                .setDefaultValue(0.0f)
-                .build()
-        )
+        //TODO: Come up with some custom float slider instead of int slider jank
 
         animations.addEntry(
             entryBuilder.startIntSlider(Component.literal("Held item offset X"), configOptions.animationPreset.posX, -150, 150)
@@ -324,12 +313,64 @@ class DulkirConfig {
                 .setDefaultValue(false)
                 .build()
         )
-        animations.addEntry(
+
+        val swingAnimCategory = builder.getOrCreateCategory(Component.literal("(twentysix) Swing Animation Settings"))
+
+        swingAnimCategory.addEntry(
+            entryBuilder.startIntSlider(
+                Component.literal("Swing animation type (0 = Vanilla, 1 = Custom)"),
+                configOptions.animationPreset.swingAnimationType,
+                0,
+                1
+            )
+            .setTooltip(Component.literal("Swing animation sliders have no effect when set to 0!!"))
+            .setSaveConsumer { newValue -> configOptions.animationPreset.swingAnimationType = newValue }
+            .setDefaultValue(0)
+            .build()
+        )
+
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(
+                Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Swing animation X offset scale"),
+                0.0f,
+                -2.0f,
+                2.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingScaleX = newValue }
+                .setDefaultValue(1.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(
+                Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Swing animation Y offset scale"),
+                0.0f,
+                -2.0f,
+                2.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingScaleY = newValue }
+                .setDefaultValue(1.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(
+                Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Swing animation Z offset scale"),
+                0.0f,
+                -2.0f,
+                2.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingScaleZ = newValue }
+                .setDefaultValue(1.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
             entryBuilder.startBooleanToggle(
-                Component.literal("Scale swing animation"),
+                Component.literal("Sync swing animation scales with item scale"),
                 configOptions.animationPreset.scaleSwingAnimation
             )
-                .setTooltip(Component.literal("Scales swing animation speed based on current item scale"))
+                .setTooltip(Component.literal("Overwrites sliders and scales swing animation speed based on current item scale"))
                 .setSaveConsumer { newValue -> configOptions.animationPreset.scaleSwingAnimation = newValue }
                 .setDefaultValue(false)
                 .build()
@@ -475,7 +516,12 @@ class DulkirConfig {
         var pitchYawDisplay: Boolean = false,
         var hideScoreboardNumbers: Boolean = false,
         var showPauseMenuButton: Boolean = false,
-        var scaleSwingAnimation: Boolean = false
+
+        var scaleSwingAnimation: Boolean = false,
+        var swingAnimationType: Int = 0,
+        var swingScaleX: Float = 0f,
+        var swingScaleY: Float = 0f,
+        var swingScaleZ: Float = 0f,
     )
 
     @Serializable
