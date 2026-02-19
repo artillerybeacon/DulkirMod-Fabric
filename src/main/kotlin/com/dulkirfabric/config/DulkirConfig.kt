@@ -15,6 +15,7 @@ package com.dulkirfabric.config
 
 import com.dulkirfabric.DulkirModFabric
 import com.dulkirfabric.DulkirModFabric.mc
+import com.dulkirfabric.addons.FloatSliderBuilder
 import com.dulkirfabric.config.ConfigHelper.mkKeyField
 import com.dulkirfabric.config.ConfigHelper.mkStringField
 import com.dulkirfabric.config.ConfigHelper.mkToggle
@@ -250,6 +251,18 @@ class DulkirConfig {
         val animations = builder.getOrCreateCategory(Component.literal("Animations"))
 
         //TODO: Come up with some custome float slider instead of int slider jank
+
+        animations.addEntry(
+            FloatSliderBuilder(
+                Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Test Float field"),
+                0.0f,
+                -1.0f,
+                1.0f
+                )
+                .setDefaultValue(0.0f)
+                .build()
+        )
 
         animations.addEntry(
             entryBuilder.startIntSlider(Component.literal("Held item offset X"), configOptions.animationPreset.posX, -150, 150)
