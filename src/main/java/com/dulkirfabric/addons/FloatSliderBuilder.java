@@ -84,9 +84,9 @@ public class FloatSliderBuilder extends AbstractSliderFieldBuilder<Float, FloatS
             entry.setTextGetter(this.textGetter);
         }
 
-        entry.setTooltipSupplier(() -> (Optional) this.getTooltipSupplier().apply(entry.getValue()));
+        entry.setTooltipSupplier(() -> this.getTooltipSupplier().apply(entry.getValue()));
         if (this.errorSupplier != null) {
-            entry.setErrorSupplier(() -> (Optional) this.errorSupplier.apply(entry.getValue()));
+            entry.setErrorSupplier(() -> this.errorSupplier.apply(entry.getValue()));
         }
 
         return (FloatSliderEntry)this.finishBuilding(entry);

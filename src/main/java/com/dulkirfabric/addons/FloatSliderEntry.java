@@ -45,7 +45,7 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
     @Deprecated
     @Internal
     public FloatSliderEntry(Component fieldName, float minimum, float maximum, float value, Component resetButtonKey, Supplier<Float> defaultValue, Consumer<Float> saveConsumer) {
-        this(fieldName, minimum, maximum, value, resetButtonKey, defaultValue, saveConsumer, (Supplier)null);
+        this(fieldName, minimum, maximum, value, resetButtonKey, defaultValue, saveConsumer, (Supplier) null);
     }
 
     /** @deprecated */
@@ -68,7 +68,7 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
         this.maximum = maximum;
         this.minimum = minimum;
         this.sliderWidget = new Slider(0, 0, 152, 20, ((double)this.value.get() - (double)minimum) / (double)Math.abs(maximum - minimum));
-        this.resetButton = Button.builder(resetButtonKey, (widget) -> this.setValue((int) defaultValue.get().floatValue())).bounds(0, 0, Minecraft.getInstance().font.width(resetButtonKey) + 6, 20).build();
+        this.resetButton = Button.builder(resetButtonKey, (widget) -> this.setValue(defaultValue.get())).bounds(0, 0, Minecraft.getInstance().font.width(resetButtonKey) + 6, 20).build();
         this.sliderWidget.setMessage((Component)this.textGetter.apply(this.value.get()));
         this.widgets = Lists.newArrayList(new AbstractWidget[]{this.sliderWidget, this.resetButton});
     }
