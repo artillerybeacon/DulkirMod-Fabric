@@ -315,6 +315,7 @@ class DulkirConfig {
                 Component.literal("Scale Swing Animation"),
                 configOptions.animationPreset.scaleSwingAnimation
             )
+                .setTooltip(Component.literal("Scales swing animation based on current item scale"))
                 .setSaveConsumer { newValue -> configOptions.animationPreset.scaleSwingAnimation = newValue }
                 .setDefaultValue(false)
                 .build()
