@@ -89,14 +89,14 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
 
     /** @deprecated */
     @Deprecated
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.sliderWidget.setValue((double)(Mth.clamp(value, this.minimum, this.maximum) - this.minimum) / (double)Math.abs(this.maximum - this.minimum));
         this.value.set(Math.min(Math.max(value, this.minimum), this.maximum));
         this.sliderWidget.updateMessage();
     }
 
     public boolean isEdited() {
-        return super.isEdited() || this.getValue().floatValue() != this.original;
+        return super.isEdited() || this.getValue() != this.original;
     }
 
     public Optional<Float> getDefaultValue() {
@@ -111,12 +111,12 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
         return this.widgets;
     }
 
-    public FloatSliderEntry setMaximum(int maximum) {
+    public FloatSliderEntry setMaximum(float maximum) {
         this.maximum = maximum;
         return this;
     }
 
-    public FloatSliderEntry setMinimum(int minimum) {
+    public FloatSliderEntry setMinimum(float minimum) {
         this.minimum = minimum;
         return this;
     }
@@ -150,7 +150,7 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
         }
 
         public void updateMessage() {
-            this.setMessage((Component)FloatSliderEntry.this.textGetter.apply(FloatSliderEntry.this.value.get()));
+            this.setMessage((Component) FloatSliderEntry.this.textGetter.apply(FloatSliderEntry.this.value.get()));
         }
 
         protected void applyValue() {
@@ -169,12 +169,12 @@ public class FloatSliderEntry extends TooltipListEntry<Float> {
             return this.value;
         }
 
-        public void setProgress(double integer) {
-            this.value = integer;
+        public void setProgress(double value) {
+            this.value = value;
         }
 
-        public void setValue(double integer) {
-            this.value = integer;
+        public void setValue(double value) {
+            this.value = value;
         }
     }
 }
