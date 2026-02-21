@@ -376,6 +376,85 @@ class DulkirConfig {
                 .build()
         )
 
+
+        /*
+        float ARM_PRESWING_ROT_Y = 45.0F;
+        float ITEM_PRESWING_ROT_Y = 45.0F;
+        float ITEM_SWING_X_ROT_AMOUNT = -80.0F;
+        float ITEM_SWING_Y_ROT_AMOUNT = -20.0F;
+        float ITEM_SWING_Z_ROT_AMOUNT = -20.0F;
+         */
+
+        swingAnimCategory.addEntry(
+            entryBuilder.startIntSlider(
+                Component.literal("Use custom swing angle settings (0 = Vanilla, 1 = Custom)"),
+                configOptions.animationPreset.swingAngleSettingType,
+                0,
+                1
+            )
+                .setTooltip(Component.literal("Swing angle sliders have no effect when set to 0!!"))
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingAngleSettingType = newValue }
+                .setDefaultValue(0)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Arm pre-swing rotation Y axis"),
+                configOptions.animationPreset.swingPreArmY,
+                -180.0f,
+                180.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingPreArmY = newValue }
+                .setDefaultValue(45.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Item pre-swing rotation Y axis"),
+                configOptions.animationPreset.swingPreItemY,
+                -180.0f,
+                180.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingPreItemY = newValue }
+                .setDefaultValue(45.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Item swing rotation amount X axis"),
+                configOptions.animationPreset.swingItemRotX,
+                -180.0f,
+                180.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingItemRotX = newValue }
+                .setDefaultValue(-80.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Item swing rotation amount X axis"),
+                configOptions.animationPreset.swingItemRotY,
+                -180.0f,
+                180.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingItemRotY = newValue }
+                .setDefaultValue(-20.0f)
+                .build()
+        )
+        swingAnimCategory.addEntry(
+            FloatSliderBuilder(Component.translatable("text.cloth-config.reset_value"),
+                Component.literal("Item swing rotation amount X axis"),
+                configOptions.animationPreset.swingItemRotZ,
+                -180.0f,
+                180.0f
+            )
+                .setSaveConsumer { newValue -> configOptions.animationPreset.swingItemRotZ = newValue }
+                .setDefaultValue(-20.0f)
+                .build()
+        )
+
+
+
         val bridge = builder.getOrCreateCategory(Component.literal("Bridge Features"))
 
         bridge.addEntry(
@@ -517,11 +596,20 @@ class DulkirConfig {
         var hideScoreboardNumbers: Boolean = false,
         var showPauseMenuButton: Boolean = false,
 
+
+
         var scaleSwingAnimation: Boolean = false,
         var swingAnimationType: Int = 0,
         var swingScaleX: Float = 0f,
         var swingScaleY: Float = 0f,
         var swingScaleZ: Float = 0f,
+
+        var swingAngleSettingType: Int = 0,
+        var swingItemRotZ: Float = 0f,
+        var swingItemRotY: Float = 0f,
+        var swingItemRotX: Float = 0f,
+        var swingPreItemY: Float = 0f,
+        var swingPreArmY: Float = 0f,
     )
 
     @Serializable

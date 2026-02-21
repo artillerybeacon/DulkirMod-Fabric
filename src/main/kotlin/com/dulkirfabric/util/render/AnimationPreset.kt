@@ -20,4 +20,11 @@ data class AnimationPreset(
     var swingScaleY: Float = 0f,
     var swingScaleZ: Float = 0f,
     var scaleSwingAnimation: Boolean = false,
+
+    var swingAngleSettingType: Int = 0,
+    var swingItemRotZ: Float = 0f,
+    var swingItemRotY: Float = 0f,
+    var swingItemRotX: Float = 0f,
+    var swingPreItemY: Float = 0f,
+    var swingPreArmY: Float = 0f,
 )

@@ -34,7 +34,6 @@ public abstract class ItemInHandRendererMixin {
                             "Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V"
             )
     )
-
     public void onRenderHeldItem(AbstractClientPlayer abstractClientPlayer, float f, float g,
                                  InteractionHand interactionHand, float h, ItemStack itemStack, float i,
                                  PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int j, CallbackInfo ci) {
@@ -55,6 +54,7 @@ public abstract class ItemInHandRendererMixin {
             poseStack.scale(scale, scale, scale);
         }
     }
+
 
     /**
      * Stop the weird mid-swing bobbing animation from happening
@@ -78,12 +78,58 @@ public abstract class ItemInHandRendererMixin {
             cancellable = true
     )
     public void dulkir$onApplyEquipOffset(PoseStack poseStack, HumanoidArm humanoidArm, float f, CallbackInfo ci) {
+        int i = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
+
         if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getCancelReEquip()) {
-            int i = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
             poseStack.translate((float)i * 0.56f, -0.52f, -0.72f);
             ci.cancel();
         }
     }
+
+    @Inject(
+        method = "applyItemArmAttackTransform",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    public void dulkir$modifyArmAttackTransform(PoseStack poseStack, HumanoidArm humanoidArm, float f, CallbackInfo ci)
+    {
+        float ARM_PRESWING_ROT_Y = 45.0F;
+        float ITEM_PRESWING_ROT_Y = 45.0F;
+        float ITEM_SWING_X_ROT_AMOUNT = -80.0F;
+        float ITEM_SWING_Y_ROT_AMOUNT = -20.0F;
+        float ITEM_SWING_Z_ROT_AMOUNT = -20.0F;
+
+        if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingAngleSettingType() == 1) {
+            ARM_PRESWING_ROT_Y = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingPreArmY();
+            ITEM_PRESWING_ROT_Y = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingPreItemY();
+            ITEM_SWING_X_ROT_AMOUNT = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingItemRotX();
+            ITEM_SWING_Y_ROT_AMOUNT = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingItemRotY();
+            ITEM_SWING_Z_ROT_AMOUNT = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingItemRotZ();
+        }
+
+        int i = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
+        float g = Mth.sin(f * f * (float) Math.PI);
+        poseStack.mulPose(Axis.YP.rotationDegrees(i * (ARM_PRESWING_ROT_Y + g * ITEM_SWING_Y_ROT_AMOUNT)));
+        float h = Mth.sin(Mth.sqrt(f) * (float) Math.PI);
+        poseStack.mulPose(Axis.ZP.rotationDegrees(i * h * ITEM_SWING_Z_ROT_AMOUNT));
+        poseStack.mulPose(Axis.XP.rotationDegrees(h * ITEM_SWING_X_ROT_AMOUNT));
+        poseStack.mulPose(Axis.YP.rotationDegrees(i * -ITEM_PRESWING_ROT_Y));
+
+
+        ci.cancel();
+    }
+
+    /*
+        private void applyItemArmAttackTransform(PoseStack poseStack, HumanoidArm humanoidArm, float f) {
+            int i = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
+            float g = Mth.sin(f * f * (float) Math.PI);
+            poseStack.mulPose(Axis.YP.rotationDegrees(i * (45.0F + g * -20.0F)));
+            float h = Mth.sin(Mth.sqrt(f) * (float) Math.PI);
+            poseStack.mulPose(Axis.ZP.rotationDegrees(i * h * -20.0F));
+            poseStack.mulPose(Axis.XP.rotationDegrees(h * -80.0F));
+            poseStack.mulPose(Axis.YP.rotationDegrees(i * -45.0F));
+        }
+     */
 
     @Inject(
         method = "swingArm",
@@ -95,8 +141,6 @@ public abstract class ItemInHandRendererMixin {
         cancellable = true
     )
     public void dulkir$onApplySwingOffset(float f, float g, PoseStack poseStack, int i, HumanoidArm humanoidArm, CallbackInfo ci) {
-
-
         if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getSwingAnimationType() == 1) {
 
             float scale = DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getScale();
@@ -145,6 +189,44 @@ public abstract class ItemInHandRendererMixin {
 
         }
     }
+
+     /*@Inject(
+        method = "applyItemArmTransform",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    public void dulkir$applyItemArmTransform(PoseStack poseStack, HumanoidArm humanoidArm, float f, CallbackInfo ci) {
+        int handedness = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
+
+        //ci.cancel();
+
+
+
+    @Inject(
+        method = "applyItemArmTransform",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    public void applyItemArmTransform(PoseStack poseStack, HumanoidArm humanoidArm, float f, CallbackInfo ci) {
+        if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getDisableItemArmTransform()) {
+            int i = humanoidArm == HumanoidArm.RIGHT ? 1 : -1;
+            poseStack.translate(i * 0.56F, -0.52F, -0.72F);
+            ci.cancel();
+        }
+    }
+
+    @Inject(
+        method = "applyItemArmAttackTransform",
+        at = @At("HEAD"),
+        cancellable = true
+    )
+    public void applyItemArmAttackTransform(PoseStack poseStack, HumanoidArm humanoidArm, float f, CallbackInfo ci) {
+        if (DulkirConfig.ConfigVars.getConfigOptions().getAnimationPreset().getDisableItemArmAttackTransform()) {
+            ci.cancel();
+        }
+    }
+    }*/
+
 
     @Inject(
             method = "applyEatTransform",
